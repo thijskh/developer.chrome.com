@@ -10,6 +10,7 @@
     {% for item in authors %}
       {% set author = postsData.authors[item] %}
       {% if author.image %}
+      <a href="{{ author.url }}" class="card-authors__image-link">
         {% Img
           class="card-authors__image rounded-full flex-shrink-none width-600 height-600 object-fit-cover",
           src=author.image,
@@ -19,6 +20,7 @@
           sizes="40px",
           options={minWidth: 40, maxWidth: 120}
         %}
+      </a>
       {% endif %}
     {% endfor %}
   {% endif %}
@@ -28,12 +30,17 @@
       {% set sep = joiner(', ') %}
       {%- for authorId in authors -%}
         {%- set author = postsData.authors[item] -%}
+<<<<<<< HEAD
         {{- sep() -}}
         {%- if author -%}
-          {{ author.title | i18n(lang) }}
+          <a href="{{ author.url }}">{{ author.title | i18n(locale) }}</a>
         {%- else -%}
           {{ authorId }}
         {%- endif -%}
+=======
+        {%- if loop.index0 > 0 -%}, {% endif -%}
+        <a href="{{ author.url }}">{{ author.title | i18n(locale) }}</a>
+>>>>>>> feat(authors): add authors page(s)
       {%- endfor -%}
     </p>
     <time class="type--small color-secondary-text">{{ helpers.formatDateShort(date, locale) }}</time>

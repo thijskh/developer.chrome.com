@@ -101,11 +101,11 @@ skip_to_content:
   en: 'Skip to content'
   es: 'Saltar al contenido'
 
-newer_posts:
-  en: 'Newer posts'
+next:
+  en: 'Next'
 
-older_posts:
-  en: 'Older posts'
+back:
+  en: 'Back'
 
 external_link:
   en: 'External link'
@@ -114,6 +114,3 @@ external_link:
 close:
   en: 'Close'
   es: 'Cerrar'
-
-back:
-  en: 'Back'
