@@ -30,17 +30,12 @@
       {% set sep = joiner(', ') %}
       {%- for authorId in authors -%}
         {%- set author = postsData.authors[item] -%}
-<<<<<<< HEAD
         {{- sep() -}}
         {%- if author -%}
           <a href="{{ author.url }}">{{ author.title | i18n(locale) }}</a>
         {%- else -%}
           {{ authorId }}
         {%- endif -%}
-=======
-        {%- if loop.index0 > 0 -%}, {% endif -%}
-        <a href="{{ author.url }}">{{ author.title | i18n(locale) }}</a>
->>>>>>> feat(authors): add authors page(s)
       {%- endfor -%}
     </p>
     <time class="type--small color-secondary-text">{{ helpers.formatDateShort(date, locale) }}</time>
