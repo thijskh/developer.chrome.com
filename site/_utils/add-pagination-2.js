@@ -24,8 +24,8 @@
 const {paginationCount} = require('../_data/site.json');
 
 /**
- * Take array of elements and returns an array of paginated pages for the elements.
- * @param {VirtualCollectionItem} item Elements to paginate
+ * Take array of elements of an item and returns an array of paginated pages for that item.
+ * @param {TODO} item Item to paginate.
  * @return {PaginatedPage[]} An array of items to display, including href and index.
  */
 module.exports = item => {

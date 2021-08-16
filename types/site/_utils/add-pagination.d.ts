@@ -15,7 +15,8 @@
  */
 
 declare global {
-  export interface PaginatedPage extends VirtualCollectionItem {
+  export interface PaginatedPage<T extends {}> extends T {
+    elements: TODO[];
     index: number;
     pages: number;
   }

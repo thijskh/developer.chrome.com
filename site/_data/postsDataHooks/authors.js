@@ -14,30 +14,14 @@
  * limitations under the License.
  */
 
-const {feed, index, individual} = require('./utils');
-
-/**
- * @param {AuthorsItem[]} authors
- * @return {AuthorsItem[]}
- */
-const authorsFeed = authors => feed(authors);
+const {index, individual} = require('./utils');
 
 /**
  * @param {AuthorsItem[]} authors
  * @return {PaginatedPage[]}
  */
 const authorsIndex = authors => {
-  const href = '/authors/';
-  const testAuthors = [
-    'robdodson',
-    'samthor',
-    'surma',
-    'mgechev',
-    'addyosmani',
-    'adamargyle',
-  ];
-
-  return index(authors, href, testAuthors);
+  return index(authors);
 };
 
 /**
@@ -48,7 +32,6 @@ const authorsIndex = authors => {
 const authorsIndividual = (authors, locale) => individual(authors, locale);
 
 module.exports = {
-  feed: authorsFeed,
   index: authorsIndex,
   individual: authorsIndividual,
 };

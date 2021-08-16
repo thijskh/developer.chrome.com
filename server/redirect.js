@@ -61,6 +61,7 @@ function buildCheckHandlerInternal(redirects, staticPaths = undefined) {
  */
 function buildRedirectHandler(filename, staticPaths = undefined, code = 301) {
   const raw = fs.readFileSync(filename, 'utf-8');
+  /** @type TODO */
   const yaml = YAML.load(raw);
 
   const handler = buildCheckHandlerInternal(yaml.redirects, staticPaths);

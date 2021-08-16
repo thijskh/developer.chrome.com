@@ -19,7 +19,6 @@ declare global {
     description: string;
     elements: FrontMatterData[];
     key: string;
-    locale: string;
     title: string;
     url: string;
   }

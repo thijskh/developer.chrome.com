@@ -23,9 +23,8 @@ const postsData = {
 /**
  * @param {string} authorKey
  * @param {FrontMatterData} frontMatter
- * @param {string} locale
  */
-function addAuthorsPost(authorKey, frontMatter, locale) {
+function addAuthorsPost(authorKey, frontMatter) {
   if (authorKey in postsData.authors) {
     postsData.authors[authorKey].elements.push(frontMatter);
   } else {
@@ -34,7 +33,6 @@ function addAuthorsPost(authorKey, frontMatter, locale) {
       description: `i18n.authors.${authorKey}.description`,
       elements: [frontMatter],
       key: authorKey,
-      locale,
       title: `i18n.authors.${authorKey}.title`,
       url: `/authors/${authorKey}/`,
     };
@@ -46,29 +44,39 @@ glob('./site/[a-z][a-z]/{**/*,*}.md', {}, (er, files) => {
     throw er;
   }
 
-  /** @type {{locale: string, data: FrontMatterData}[]} */
+  /** @type {FrontMatterData[]} */
   const fileContents = files
     .map(file => {
       const filePath = path.join(process.cwd(), file);
       const fileData = fs.readFileSync(filePath, 'utf8');
+      const data = /** @type FrontMatterData */ (
+        /** @type TODO */ matter(fileData).data
+      );
       let locale = defaultLocale;
-      const groups = /\/site\/(?<locale>[a-z]{2})\/.*/.exec(file)?.groups;
-      if (groups && groups.locale) {
-        locale = groups.locale;
+      const localeGroups = /\/site\/(?<locale>[a-z]{2})\/.*/.exec(file)?.groups;
+      if (localeGroups && localeGroups.locale) {
+        locale = localeGroups.locale;
+      }
+      let url = '';
+      const urlGroups = /\/site\/([a-z]{2})(?<url>\/.*\/).*\.md$/.exec(file)
+        ?.groups;
+      if (urlGroups && urlGroups.url) {
+        url = urlGroups.url;
       }
       return {
+        ...data,
         locale,
-        data: matter(fileData).data,
+        url,
       };
     })
-    .filter(f => f.data.date)
-    .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+    .filter(f => !!f.date && !!f.url)
+    .sort((a, b) => a.date.getTime() - b.date.getTime());
 
   for (const fileContent of fileContents) {
-    if (fileContent.data.authors) {
-      for (const authorKey of fileContent.data.authors) {
+    if (fileContent.authors) {
+      for (const authorKey of fileContent.authors) {
         if (authorKey in authorsYaml) {
-          addAuthorsPost(authorKey, fileContent.data, fileContent.locale);
+          addAuthorsPost(authorKey, fileContent);
         }
       }
     }

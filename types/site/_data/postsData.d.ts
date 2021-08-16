@@ -26,7 +26,11 @@ declare global {
     layout?: string;
     description?: string;
     subhead?: string;
-    date?: Date;
+    /**
+     * Date is technically optional for frontmatter, but any frontmatter without a date is filtered out and not used.
+     * It's easier to just assume it's not an optional property.
+     */
+    date: Date;
     updated?: Date;
     authors?: string[];
     tags?: string[];
@@ -50,6 +54,9 @@ declare global {
     api?: string;
     extra_permissions?: string[];
     extra_permissions_html?: string;
+    // The following properties are added dynamically
+    locale: string;
+    url: string;
   }
 
   export interface FrontMatterDataCollection {

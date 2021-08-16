@@ -15,78 +15,46 @@
  */
 
 /**
- * Reusable hooks for authors and tags
+ * Reusable hooks for authors
  */
 
-const {paginationCount} = require('../site.json');
 const addPagination = require('../../_utils/add-pagination-2');
-//const filterByLang = require('../../_filters/filter-by-lang');
+const filterByLocale = require('../../_filters/filter-by-locale');
 
 /**
  * @param {VirtualCollectionItem[]} items
- * @return {VirtualCollectionItem[]}
+ * @return {PaginatedPage[]}
  */
-const feed = items => {
-  const filteredFeed = [];
+const index = items => {
+  const itemsWithPosts = items
+    .filter(item => item.elements.length > 0)
+    .sort((a, b) => a.title.localeCompare(b.title));
 
-  if (process.env.ELEVENTY_ENV !== 'prod') {
-    return filteredFeed;
-  }
-
-  for (const item of items) {
-    if (item.elements.length > 0) {
-      filteredFeed.push({
-        ...item,
-        elements: item.elements.slice(0, paginationCount),
-      });
-    }
-  }
-
-  return filteredFeed;
+  return addPagination(itemsWithPosts);
 };
 
 /**
  * @param {VirtualCollectionItem[]} items
- * @param {string} href
- * @param {string[]} testItems
- * @return {PaginatedPage[]}
- */
-const index = (items, href, testItems) => {
-  let itemsWithPosts = [];
-
-  if (process.env.PERCY) {
-    itemsWithPosts = items.filter(item => testItems.includes(item.key));
-  } else {
-    itemsWithPosts = items.filter(item => item.elements.length > 0);
-  }
-
-  itemsWithPosts.sort((a, b) => a.title.localeCompare(b.title));
-
-  return addPagination(itemsWithPosts, {href});
-};
-
-/**
- * @param {VirtualCollectionItem[]} items
- * @param {string} locale
- * @return {PaginatedPage[]}
+ * @param {string} [locale]
+ * @return {PaginatedPage<VirtualCollectionItem>[]}
  */
 const individual = (items, locale) => {
+  /** @type PaginatedPage<VirtualCollectionItem>[] */
   let paginated = [];
-
   for (const item of items) {
     if (item.elements.length > 0) {
       paginated = paginated.concat(
-        // addPagination(filterByLang(item.elements, lang), item)
-        addPagination(item)
+        addPagination({
+          ...item,
+          elements: filterByLocale(item.elements, locale),
+        })
       );
     }
   }
-
   return paginated;
 };
 
 module.exports = {
-  feed,
   index,
   individual,
 };
