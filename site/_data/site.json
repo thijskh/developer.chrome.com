@@ -15,5 +15,6 @@
     "ja"
   ],
   "defaultLocale": "en",
-  "cookiesCtaUrl": "https://policies.google.com/technologies/cookies"
+  "cookiesCtaUrl": "https://policies.google.com/technologies/cookies",
+  "paginationCount": 24
 }

@@ -21,6 +21,8 @@
  * the tags may be long to one data set.
  */
 
+const {paginationCount} = require('../_data/site.json');
+
 /**
  * Generates href for paginated page.
  * @param {string} baseUrl
@@ -39,10 +41,10 @@ const createPermalink = (baseUrl, i) => createHref(baseUrl, i) + 'index.html';
 
 /**
  * Take array of elements and returns an array of paginated pages for the elements.
- * @param {any[]} items Collection item's for pagination.
+ * @param {TODO[]} items Collection item's for pagination.
  * @param {string} baseUrl Beginning of url.
- * @param {{[key: string]: unknown}} additional
- * @return {PaginatedPage[]}
+ * @param {TODO} additional
+ * @return {PaginatedPage<TODO>[]}
  */
 module.exports = (items, baseUrl, additional = {}) => {
   if (items.length === 0) {
@@ -54,21 +56,20 @@ module.exports = (items, baseUrl, additional = {}) => {
 
   /** @type PaginatedPage[] */
   const paginated = [];
-  const count = 24;
-  const total = Math.ceil(items.length / count);
+  const total = Math.ceil(items.length / paginationCount);
   const date = items[0].date;
   const hrefs = Array.from({length: total}).map((_, i) =>
     createHref(baseUrl, i)
   );
 
   for (let i = 0; i < total; i++) {
-    const start = i * count;
+    const start = i * paginationCount;
     paginated.push({
       ...additional,
       date,
       href: createHref(baseUrl, i),
       pagination: {
-        items: items.slice(start, start + count),
+        items: items.slice(start, start + paginationCount),
         pageNumber: i,
         hrefs,
         href: {

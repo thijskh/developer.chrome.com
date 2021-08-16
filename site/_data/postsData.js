@@ -22,17 +22,17 @@ const postsData = {
 
 /**
  * @param {string} authorKey
- * @param {FrontMatterData} fronMatter
+ * @param {FrontMatterData} frontMatter
  * @param {string} locale
  */
-function addAuthorsPost(authorKey, fronMatter, locale) {
+function addAuthorsPost(authorKey, frontMatter, locale) {
   if (authorKey in postsData.authors) {
-    postsData.authors[authorKey].elements.push(fronMatter);
+    postsData.authors[authorKey].elements.push(frontMatter);
   } else {
     postsData.authors[authorKey] = {
       ...authorsData[authorKey],
       description: `i18n.authors.${authorKey}.description`,
-      elements: [fronMatter],
+      elements: [frontMatter],
       key: authorKey,
       locale,
       title: `i18n.authors.${authorKey}.title`,
