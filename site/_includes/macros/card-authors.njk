@@ -7,8 +7,8 @@
     If there's no data for the author, just renders their ID.
   #}
   {% if authors.length < 3 %}
-    {% for item in authors %}
-      {% set author = postsData.authors[item] %}
+    {% for authorId in authors %}
+      {% set author = postsData.authors[authorId] %}
       {% if author.image %}
       <a href="{{ author.url }}" class="card-authors__image-link">
         {% Img
@@ -29,7 +29,7 @@
     <p class="type--small">
       {% set sep = joiner(', ') %}
       {%- for authorId in authors -%}
-        {%- set author = postsData.authors[item] -%}
+        {%- set author = postsData.authors[authorId] -%}
         {{- sep() -}}
         {%- if author -%}
           <a href="{{ author.url }}">{{ author.title | i18n(locale) }}</a>
