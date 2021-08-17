@@ -88,6 +88,7 @@ module.exports = function (collections) {
            */
           posts: locales.reduce((o, key) => ({...o, [key]: []}), {}),
           title: chromeTag.replace('chrome-', 'Chrome '),
+          url: `/tags/${chromeTag}/`,
           /**
            * This is a flag so we know this tag was generated tag, not a supported tag.
            * Because there aren't any i18n titles for Chrome releases this
@@ -131,6 +132,7 @@ module.exports = function (collections) {
            * Sets the title to the i18n value for the tag.
            */
           title: supportedTags[postsTag].title,
+          url: `/tags/${postsTag}/`,
           /**
            * This is a flag so we know this tag is a supported tag, not a generated tag.
            * This is important for files like `site/_utils/tag-11tydata.js` to know

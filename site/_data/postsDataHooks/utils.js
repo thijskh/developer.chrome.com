@@ -18,7 +18,7 @@
  * Reusable hooks for authors
  */
 
-const addPagination = require('../../_utils/add-pagination-2');
+const addPagination = require('../../_utils/add-pagination');
 const filterByLocale = require('../../_filters/filter-by-locale');
 const {i18n} = require('../../_filters/i18n');
 

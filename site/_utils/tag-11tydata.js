@@ -41,13 +41,10 @@ module.exports = locale => ({
       let paginated = [];
 
       for (const tag of tags) {
-        const posts = tag.posts[locale];
-        if (posts.length > 0) {
-          paginated = paginated.concat(
-            addPagination(posts, locale + '/tags/' + tag.key, {
-              title: tag.isGeneratedTag ? tag.title : i18n(tag.title, locale),
-            })
-          );
+        tag['elements'] = tag.posts[locale];
+        tag.title = tag.isGeneratedTag ? tag.title : i18n(tag.title, locale);
+        if (tag['elements'].length > 0) {
+          paginated = paginated.concat(addPagination(tag));
         }
       }
 

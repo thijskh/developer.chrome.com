@@ -90,6 +90,7 @@ toc:
 
 tags:
   en: 'Tags'
+  es: 'Etiquetas'
 
 documentation:
   en: 'Documentation'
@@ -103,9 +104,11 @@ skip_to_content:
 
 next:
   en: 'Next'
+  es: 'Siguiente'
 
 back:
   en: 'Back'
+  es: 'Atrás'
 
 external_link:
   en: 'External link'
@@ -114,3 +117,7 @@ external_link:
 close:
   en: 'Close'
   es: 'Cerrar'
+
+authors:
+  en: 'Authors'
+  es: 'Autores'
