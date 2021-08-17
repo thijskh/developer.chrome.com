@@ -1,17 +1,18 @@
 {% from 'macros/card-authors.njk' import cardAuthors with context %}
 
 {% macro authorCard(author) %}
-<div class="blog-card rounded-lg pad-300 md:pad-400 width-full">
+<div class="blog-card rounded-lg pad-300 md:pad-400 width-full text-align-center">
   {% if author.image %}
-    <div class="blog-card__thumbnail gap-bottom-300">
+    <div class="gap-bottom-300">
       <a class="display-block" href="{{ author.url }}">
         {% Img
-          class="rounded-100 object-fit-cover width-full",
           src=author.image,
           alt=author.title | i18n(locale),
-          width="278",
-          height="156",
-          sizes="(min-width: 36em) 330px, calc(100vw - 82px)"
+          height="192",
+          width="192",
+          class="author-image",
+          sizes="(min-width: 481px) 192px, 128px",
+          options={minWidth: 128}
         %}
       </a>
     </div>

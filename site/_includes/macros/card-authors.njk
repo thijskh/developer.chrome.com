@@ -10,11 +10,11 @@
     {% for authorId in authors %}
       {% set author = postsData.authors[authorId] %}
       {% if author.image %}
-      <a href="{{ author.url }}" class="card-authors__image-link">
+      <a href="{{ author.url }}" class="card-authors__image">
         {% Img
-          class="card-authors__image rounded-full flex-shrink-none width-600 height-600 object-fit-cover",
+        class="flex-shrink-none width-600 height-600",
           src=author.image,
-          alt=author.title | i18n(lang),
+          alt=author.title | i18n(locale),
           width="40",
           height="40",
           sizes="40px",
