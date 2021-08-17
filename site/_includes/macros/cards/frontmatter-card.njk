@@ -1,6 +1,6 @@
 {% from 'macros/card-authors.njk' import cardAuthors with context %}
 
-{% macro fronmatterCard(fm) %}
+{% macro frontMatterCard(fm) %}
 <div class="blog-card rounded-lg pad-300 md:pad-400 width-full">
   {% if fm.hero %}
     {% set alt = fm.title or 'Unlabeled image' %}

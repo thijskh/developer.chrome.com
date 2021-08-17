@@ -39,48 +39,41 @@ function addAuthorsPost(authorKey, frontMatter) {
   }
 }
 
-glob('./site/[a-z][a-z]/{**/*,*}.md', {}, (er, files) => {
-  if (er) {
-    throw er;
-  }
+const files = glob.sync('./site/[a-z][a-z]/{**/*,*}.md', {});
 
-  /** @type {FrontMatterData[]} */
-  const fileContents = files
-    .map(file => {
-      const filePath = path.join(process.cwd(), file);
-      const fileData = fs.readFileSync(filePath, 'utf8');
-      const data = /** @type FrontMatterData */ (
-        /** @type TODO */ matter(fileData).data
-      );
-      let locale = defaultLocale;
-      const localeGroups = /\/site\/(?<locale>[a-z]{2})\/.*/.exec(file)?.groups;
-      if (localeGroups && localeGroups.locale) {
-        locale = localeGroups.locale;
-      }
-      let url = '';
-      const urlGroups = /\/site\/([a-z]{2})(?<url>\/.*\/).*\.md$/.exec(file)
-        ?.groups;
-      if (urlGroups && urlGroups.url) {
-        url = urlGroups.url;
-      }
-      return {
-        ...data,
-        locale,
-        url,
-      };
-    })
-    .filter(f => !!f.date && !!f.url)
-    .sort((a, b) => a.date.getTime() - b.date.getTime());
+/** @type {FrontMatterData[]} */
+const fileContents = files
+  .map(file => {
+    const filePath = path.join(process.cwd(), file);
+    const fileData = fs.readFileSync(filePath, 'utf8');
+    const data = /** @type FrontMatterData */ (
+      /** @type TODO */ matter(fileData).data
+    );
 
-  for (const fileContent of fileContents) {
-    if (fileContent.authors) {
-      for (const authorKey of fileContent.authors) {
-        if (authorKey in authorsYaml) {
-          addAuthorsPost(authorKey, fileContent);
-        }
+    const localeGroups = /\/site\/(?<locale>[a-z]{2})\/.*/.exec(file)?.groups;
+    const locale = localeGroups?.locale ?? defaultLocale;
+
+    const urlGroups = /\/site\/([a-z]{2})(?<url>\/.*\/).*\.md$/.exec(file)
+      ?.groups;
+    const url = urlGroups?.url ?? '';
+
+    return {
+      ...data,
+      locale,
+      url,
+    };
+  })
+  .filter(f => !!f.date && !!f.url)
+  .sort((a, b) => a.date.getTime() - b.date.getTime());
+
+for (const fileContent of fileContents) {
+  if (fileContent.authors) {
+    for (const authorKey of fileContent.authors) {
+      if (authorKey in authorsYaml) {
+        addAuthorsPost(authorKey, fileContent);
       }
     }
   }
-});
+}
 
 module.exports = postsData;
