@@ -9,6 +9,6 @@ i18n:
     latest-news: 'Authors'
 pagination:
   data: postsData.authors
-  resolve: values
   size: 24
+  resolve: values
 ---

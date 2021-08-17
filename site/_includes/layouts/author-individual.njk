@@ -1,6 +1,6 @@
-{% extends "layouts/base.njk" %}
-
 {% from 'macros/cards/frontmatter-card.njk' import fronmatterCard with context %}
+
+{% extends "layouts/base.njk" %}
 
 {% block title_bar %}
   {% include 'partials/breadcrumbs.njk' %}
@@ -9,10 +9,10 @@
 {% block content %}
   <div class="measure-1280 width-full center-margin pad-left-400 pad-right-400">
     <div class="blog-grid">
-      {% for fm in paged.elements %}
+      {% for fm in paged.pagination.items %}
         {{ fronmatterCard(fm) }}
       {% endfor %}
     </div>
-    {# {% include 'partials/pagination.njk' %} #}
+    {% include 'partials/pagination.njk' %}
   </div>
 {% endblock %}

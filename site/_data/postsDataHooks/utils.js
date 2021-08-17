@@ -20,15 +20,17 @@
 
 const addPagination = require('../../_utils/add-pagination-2');
 const filterByLocale = require('../../_filters/filter-by-locale');
+const {i18n} = require('../../_filters/i18n');
 
 /**
  * @param {VirtualCollectionItem[]} items
+ * @param {string} locale
  * @return {PaginatedPage[]}
  */
-const index = items => {
+const index = (items, locale) => {
   const itemsWithPosts = items
     .filter(item => item.elements.length > 0)
-    .sort((a, b) => a.title.localeCompare(b.title));
+    .sort((a, b) => i18n(a.title, locale).localeCompare(i18n(b.title, locale)));
 
   return addPagination(itemsWithPosts);
 };

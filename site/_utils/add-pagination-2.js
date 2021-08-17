@@ -24,6 +24,22 @@
 const {paginationCount} = require('../_data/site.json');
 
 /**
+ * Generates href for paginated page.
+ * @param {string} baseUrl
+ * @param {number} i
+ * @return {string}
+ */
+const createHref = (baseUrl, i) => baseUrl + (i === 0 ? '/' : `/${i + 1}/`);
+
+/**
+ * Generates permalink for paginated page.
+ * @param {string} baseUrl
+ * @param {number} i
+ * @return {string}
+ */
+const createPermalink = (baseUrl, i) => createHref(baseUrl, i) + 'index.html';
+
+/**
  * Take array of elements of an item and returns an array of paginated pages for that item.
  * @param {TODO} item Item to paginate.
  * @return {PaginatedPage[]} An array of items to display, including href and index.
@@ -41,19 +57,32 @@ module.exports = item => {
 
   /** @type PaginatedPage[] */
   const paginated = [];
-  const pages = Math.ceil(item.elements.length / paginationCount);
+  const total = Math.ceil(item.elements.length / paginationCount);
+  const date = item.elements[0].date;
+  const hrefs = Array.from({length: total}).map((_, i) =>
+    createHref(item.url, i)
+  );
 
-  for (let i = 0; i < pages; i++) {
-    const startFrom = i * paginationCount;
-    const elements = item.elements.slice(
-      startFrom,
-      startFrom + paginationCount
-    );
+  for (let i = 0; i < total; i++) {
+    const start = i * paginationCount;
     paginated.push({
       ...item,
-      elements,
-      index: i,
-      pages,
+      date,
+      href: createHref(item.url, i),
+      pagination: {
+        items: item.elements.slice(start, start + paginationCount),
+        pageNumber: i,
+        hrefs,
+        href: {
+          next: i < total - 1 ? createHref(item.url, i + 1) : null,
+          previous: i > 0 ? createHref(item.url, i - 1) : null,
+          first: createHref(item.url, 0),
+          last: createHref(item.url, total - 1),
+        },
+        data: 'WARNING_SYNTHETIC_PAGINATION',
+        size: total,
+      },
+      permalink: createPermalink(item.url, i),
     });
   }
 

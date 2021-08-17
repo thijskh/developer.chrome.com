@@ -14,25 +14,11 @@
  * limitations under the License.
  */
 
-const {index, individual} = require('./utils');
-
-/**
- * @param {AuthorsItem[]} authors
- * @param {string} locale
- * @return {PaginatedPage[]}
- */
-const authorsIndex = (authors, locale) => {
-  return index(authors, locale);
-};
-
-/**
- * @param {AuthorsItem[]} authors
- * @param {string} locale
- * @return {PaginatedPage[]}
- */
-const authorsIndividual = (authors, locale) => individual(authors, locale);
+const {individual} = require('../../../_data/postsDataHooks/authors');
+const {locale} = require('../../en.11tydata');
 
 module.exports = {
-  index: authorsIndex,
-  individual: authorsIndividual,
+  pagination: {
+    before: authors => individual(authors, locale),
+  },
 };

@@ -19,6 +19,7 @@ declare global {
     elements: TODO[];
     index: number;
     pages: number;
+    pagination: EleventyPagination;
   }
 }
 

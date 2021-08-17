@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-const {individual} = require('../../_data/postsDataHooks/authors');
-const {locale} = require('../en.11tydata');
+// const {index} = require('../../_data/postsDataHooks/authors');
+// const {locale} = require('../en.11tydata');
 
 module.exports = {
-  pagination: {
-    before: authors => individual(authors, locale),
-  },
+  // pagination: {
+  //   before: authors => index(authors, locale),
+  // },
 };
